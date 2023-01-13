@@ -1,0 +1,11 @@
+# syntax=docker/dockerfile:1
+
+FROM golang:1.19.2 AS builder
+WORKDIR /go/src/github.com/devincd/coredns-hosts-api/
+COPY . .
+RUN make WHAT=coredns-hosts-server
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+COPY --from=builder /go/src/github.com/devincd/coredns-hosts-api/_output/coredns-hosts-server /bin/
+CMD ["/bin/coredns-hosts-server"]

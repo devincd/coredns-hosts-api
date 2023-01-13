@@ -1,16 +1,30 @@
-all: clean compile build
+WHAT ?= coredns-hosts-server
+HUB ?= docker.io/devincd
+
+all: clean build
+docker: docker-build docker-push
 
 .PHONY: clean
 clean:
-	rm -f coredns-hosts-api
-
-.PHONY: compile
-compile:
-	GOOS=linux CGO_ENABLED=0 go build -o coredns-hosts-api .
+	rm -f _output/$(WHAT)
 
 .PHONY: build
 build:
-	docker build -t coredns-hosts-api:$(VERSION) -f Dockerfile .
+	CGO_ENABLED=0 go build -o _output/$(WHAT) cmd/$(WHAT)/main.go
 
-.PHONY: push
-push:
+.PHONY: docker-build
+docker-build:
+ifeq ($(VERSION), )
+	echo "make docker-build command must set VERSION"
+	exit 1
+else
+	DOCKER_BUILDKIT=0 docker build --no-cache -t $(HUB)/${WHAT}:$(VERSION) -f Dockerfile_${WHAT} .
+endif
+
+.PHONY: docker-push
+docker-push:
+ifeq ($(VERSION), )
+	echo "make docker-push command must set VERSION"
+	exit 1
+endif
+	docker push $(HUB)/${WHAT}:$(VERSION)
