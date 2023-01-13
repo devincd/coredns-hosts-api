@@ -1,6 +1,9 @@
 # coredns-hosts-api
 Implement API to add and delete DNS records based on coreDNS hosts plugin
 
+## 原理
+>kube-system 命名空间下会自动创建名字为 coredns-hosts-api 的 configmap，用于存储自定义的 DNS 记录。
+
 ## 自动安装
 
 ## 手动安装
@@ -39,7 +42,7 @@ rules:
 ## 新增yaml结束
 ```
 
-1、coredns-hosts-server 以 sidecar 的形式注入到 coredns deployment 中去，
+第一步：coredns-hosts-server 以 sidecar 的形式注入到 coredns deployment 中去，
 那么完整的 coredns deployment 如下：
 ```yaml
 apiVersion: apps/v1
@@ -155,7 +158,7 @@ spec:
         ## 新增yaml结束
 ```
 
-2、将接口服务通过 coredns svc 暴露出去，那么完整的 coredns svc 为：
+第二步：将接口服务通过 coredns svc 暴露出去，那么完整的 coredns svc 为：
 ```yaml
 apiVersion: v1
 kind: Service
@@ -189,7 +192,7 @@ spec:
   ## 新增yaml结束
 ```
 
-3、修改 coreDNS configmap 配置
+第三步：修改 coreDNS configmap 配置
 ```yaml
 .:53 {
         errors
@@ -249,8 +252,6 @@ $ curl -X DELETE \
 
 ### 错误请求示例
 ```shell
-```shell
 $ curl -X GET http://corednsIP:9080/api/v1/record/www.baidu.com
 {"code":1,"data":null,"message":"can't find the ip according to the domain www.baidu.com"}
-```
 ```
