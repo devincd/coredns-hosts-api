@@ -6,6 +6,6 @@ COPY . .
 RUN make WHAT=coredns-hosts-server
 
 FROM alpine:latest
-RUN apk --no-cache add ca-certificates
+# RUN apk --no-cache add ca-certificates
 COPY --from=builder /go/src/github.com/devincd/coredns-hosts-api/_output/coredns-hosts-server /bin/
 CMD ["/bin/coredns-hosts-server"]
