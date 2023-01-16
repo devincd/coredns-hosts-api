@@ -1,8 +1,8 @@
 package server
 
 type Args struct {
-	Addr     string `json:"addr"`
-	FilePath string `json:"file_path"`
+	Addr     string
+	FilePath string
 	// Kubeconfig  is absolute path to the kubeconfig file
 	Kubeconfig string
 }
