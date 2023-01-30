@@ -5,6 +5,23 @@ Implement API to add and delete DNS records based on coreDNS hosts plugin
 >kube-system 命名空间下会自动创建名字为 coredns-hosts-api 的 configmap，用于存储自定义的 DNS 记录。
 
 ## 自动安装
+运行一次性脚本
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: coredns-hosts-installer
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: coredns-hosts-installer
+        image: docker.io/devincd/coredns-hosts-installer:v0.0.1
+        imagePullPolicy: Always
+      restartPolicy: Never
+  backoffLimit: 4
+```
 
 ## 手动安装
 前提条件，由于需要操作 configmap，所以需要修改下 clusterrole，完整的 clusterrole如下：

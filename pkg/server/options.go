@@ -1,8 +1,7 @@
 package server
 
 type Args struct {
-	Addr     string
-	FilePath string
+	Port int32
 	// Kubeconfig  is absolute path to the kubeconfig file
 	Kubeconfig string
 }

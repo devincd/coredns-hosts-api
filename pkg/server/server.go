@@ -32,7 +32,7 @@ func NewServer(args Args) (*Server, error) {
 	if err := s.initKubeClient(args); err != nil {
 		return nil, err
 	}
-	s.initController(args)
+	s.initController()
 	if err := s.initWebService(args); err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (s *Server) initWebService(args Args) error {
 	route := gin.Default()
 	route.Use()
 
-	record, err := newRecordController(args, s.clientset)
+	record, err := newRecordController(s.clientset)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ func (s *Server) initWebService(args Args) error {
 	}
 
 	webServer := &http.Server{
-		Addr:    args.Addr,
+		Addr:    fmt.Sprintf("0.0.0.0:%d", args.Port),
 		Handler: route,
 	}
 	s.webServer = webServer
@@ -110,11 +110,11 @@ func (s *Server) initKubeClient(args Args) error {
 	return nil
 }
 
-func (s *Server) initController(args Args) {
+func (s *Server) initController() {
 	informerFactory := informers.NewSharedInformerFactory(s.clientset, 0)
 	s.informerFactory = informerFactory
 
-	s.configmapController = controller.NewConfigmapController(s.clientset, s.informerFactory.Core().V1().ConfigMaps(), args.FilePath)
+	s.configmapController = controller.NewConfigmapController(s.clientset, s.informerFactory.Core().V1().ConfigMaps())
 }
 
 type recordController struct {
@@ -125,7 +125,7 @@ type recordController struct {
 	clientset *kubernetes.Clientset
 }
 
-func newRecordController(args Args, clientset *kubernetes.Clientset) (*recordController, error) {
+func newRecordController(clientset *kubernetes.Clientset) (*recordController, error) {
 	rc := &recordController{
 		lock:      &sync.RWMutex{},
 		clientset: clientset,

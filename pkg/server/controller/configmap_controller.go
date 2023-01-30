@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"github.com/devincd/coredns-hosts-api/pkg/common"
 	"k8s.io/klog/v2"
 	"os"
 	"time"
@@ -40,12 +41,12 @@ type ConfigmapController struct {
 	workqueue workqueue.RateLimitingInterface
 }
 
-func NewConfigmapController(clientset *kubernetes.Clientset, configmapInformer coreinformers.ConfigMapInformer, filePath string) *ConfigmapController {
+func NewConfigmapController(clientset *kubernetes.Clientset, configmapInformer coreinformers.ConfigMapInformer) *ConfigmapController {
 	c := &ConfigmapController{
 		clientset:       clientset,
 		configmapLister: configmapInformer.Lister(),
 		configmapSynced: configmapInformer.Informer().HasSynced,
-		filePath:        filePath,
+		filePath:        common.CoreDNSHostsPath,
 
 		workqueue: workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "Configmap"),
 	}

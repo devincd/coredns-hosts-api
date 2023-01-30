@@ -3,6 +3,7 @@ module github.com/devincd/coredns-hosts-api
 go 1.19
 
 require (
+	github.com/coredns/caddy v1.1.1
 	github.com/gin-gonic/gin v1.8.2
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/pflag v1.0.5

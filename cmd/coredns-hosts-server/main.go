@@ -25,7 +25,7 @@ func main() {
 
 func newCommand() *cobra.Command {
 	command := &cobra.Command{
-		Use:   "coredns-hosts-api",
+		Use:   "coredns-hosts-server",
 		Short: "coredns web apis service for hosts",
 		Args:  cobra.ExactArgs(0),
 		PreRunE: func(cmd *cobra.Command, args []string) error {
@@ -56,8 +56,7 @@ func addFlags(c *cobra.Command) {
 
 	c.PersistentFlags().AddGoFlagSet(flag.CommandLine)
 	c.PersistentFlags().StringVar(&serverArgs.Kubeconfig, "kubeconfig", "", "absolute path to the kubeconfig file")
-	c.PersistentFlags().StringVar(&serverArgs.Addr, "addr", "0.0.0.0:9080", "the web service address")
-	c.PersistentFlags().StringVar(&serverArgs.FilePath, "file-path", "/etc/coredns-dir/hosts", "the host file path")
+	c.PersistentFlags().Int32Var(&serverArgs.Port, "port", 9080, "the web service port")
 }
 
 func printFlags(c *cobra.Command) {

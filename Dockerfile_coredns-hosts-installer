@@ -3,9 +3,9 @@
 FROM golang:1.19.2 AS builder
 WORKDIR /go/src/github.com/devincd/coredns-hosts-api/
 COPY . .
-RUN make WHAT=coredns-hosts-server
+RUN make WHAT=coredns-hosts-installer
 
 FROM alpine:latest
 # RUN apk --no-cache add ca-certificates
-COPY --from=builder /go/src/github.com/devincd/coredns-hosts-api/_output/coredns-hosts-server /bin/
-ENTRYPOINT ["/bin/coredns-hosts-server"]
+COPY --from=builder /go/src/github.com/devincd/coredns-hosts-api/_output/coredns-hosts-installer /bin/
+ENTRYPOINT ["/bin/coredns-hosts-installer"]

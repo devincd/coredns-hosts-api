@@ -1,3 +1,6 @@
+# github.com/coredns/caddy v1.1.1
+## explicit; go 1.13
+github.com/coredns/caddy/caddyfile
 # github.com/davecgh/go-spew v1.1.1
 ## explicit
 github.com/davecgh/go-spew/spew
