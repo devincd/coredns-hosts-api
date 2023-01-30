@@ -3,14 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/devincd/coredns-hosts-api/pkg/server"
-	"k8s.io/klog/v2"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/devincd/coredns-hosts-api/pkg/server"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+	"k8s.io/klog/v2"
 )
 
 var serverArgs server.Args

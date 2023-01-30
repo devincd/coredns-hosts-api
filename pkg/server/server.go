@@ -3,6 +3,11 @@ package server
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"os"
+	"path/filepath"
+	"sync"
+
 	"github.com/devincd/coredns-hosts-api/pkg/server/controller"
 	"github.com/gin-gonic/gin"
 	corev1 "k8s.io/api/core/v1"
@@ -14,10 +19,6 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"k8s.io/client-go/util/retry"
 	"k8s.io/klog/v2"
-	"net/http"
-	"os"
-	"path/filepath"
-	"sync"
 )
 
 type Server struct {

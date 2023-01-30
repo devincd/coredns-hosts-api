@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"github.com/devincd/coredns-hosts-api/pkg/installer"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"k8s.io/klog/v2"
-	"os"
 )
 
 var installerArgs = installer.NewEmptyArgs()
