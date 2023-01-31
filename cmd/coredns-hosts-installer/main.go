@@ -52,7 +52,7 @@ func addFlags(c *cobra.Command) {
 	c.PersistentFlags().StringVar(&installerArgs.Kubeconfig, "kubeconfig", "", "absolute path to the kubeconfig file")
 	c.PersistentFlags().StringVar(&installerArgs.CoreDNSName, "coredns-name", "coredns", "the name of coreDNS component, including the Deployment and Service.")
 	c.PersistentFlags().StringVar(&installerArgs.CoreDNSNamespace, "coredns-namespace", "kube-system", "the namespace of coreDNS component, including the Deployment and Service.")
-	c.PersistentFlags().StringVar(&installerArgs.CoreDNSHostsServerVersion, "corednsHostsServer-version", "v0.0.1", "")
+	c.PersistentFlags().StringVar(&installerArgs.CoreDNSHostsServerVersion, "corednsHostsServer-version", "v1.0.0", "")
 	c.PersistentFlags().StringVar(&installerArgs.ServerArgs.Kubeconfig, "server-kubeconfig", "", "absolute path to the kubeconfig file of coredns-hosts-server component")
 	c.PersistentFlags().Int32Var(&installerArgs.ServerArgs.Port, "server-port", 9080, "the web service port of coredns-hosts-server component")
 }

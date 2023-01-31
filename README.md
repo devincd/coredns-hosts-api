@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: coredns-hosts-installer
-        image: docker.io/devincd/coredns-hosts-installer:v0.0.1
+        image: docker.io/devincd/coredns-hosts-installer:v1.0.0
         imagePullPolicy: Always
       restartPolicy: Never
   backoffLimit: 4
@@ -104,7 +104,7 @@ spec:
       containers:
       ## 新增yaml
       - name: coredns-hosts-server
-        image: docker.io/devincd/coredns-hosts-server:v0.0.1
+        image: docker.io/devincd/coredns-hosts-server:v1.0.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - mountPath: /etc/coredns-dir
