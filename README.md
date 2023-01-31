@@ -7,6 +7,27 @@ Implement API to add and delete DNS records based on coreDNS hosts plugin
 ## 自动安装
 运行一次性脚本
 ```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: coredns-hosts-installer
+  namespace: kube-system
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: system:coredns-hosts-installer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: coredns-hosts-installer
+    namespace: kube-system
+
+---	
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -15,6 +36,7 @@ metadata:
 spec:
   template:
     spec:
+      serviceAccountName: coredns-hosts-installer
       containers:
       - name: coredns-hosts-installer
         image: docker.io/devincd/coredns-hosts-installer:v1.0.0
