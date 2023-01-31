@@ -27,7 +27,7 @@ subjects:
     name: coredns-hosts-installer
     namespace: kube-system
 
----	
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
