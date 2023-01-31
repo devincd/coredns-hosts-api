@@ -367,7 +367,11 @@ func BuildNewCoreFile(corefile []byte) ([]byte, bool, error) {
 						if item[0] == "hosts" {
 							if !ExistInterfaceSlice(hostsPath, item) {
 								needUpdate = true
-								item = append(item, hostsPath)
+								if len(item) == 1 {
+									item = append(item, hostsPath)
+								} else {
+									item[1] = hostsPath
+								}
 							}
 						}
 						block.Body = append(block.Body, item)
